@@ -1,4 +1,7 @@
-
+# Setup
+```
+git submodule update --init --recursive
+```
 
 # References
 - [Wio Terminal Getting Started](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) - documentaiton for the Seeed studio wio terminal
