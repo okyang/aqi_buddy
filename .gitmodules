@@ -1,0 +1,3 @@
+[submodule "lib/Adafruit_PM25AQI"]
+	path = lib/Adafruit_PM25AQI
+	url = https://github.com/adafruit/Adafruit_PM25AQI.git
