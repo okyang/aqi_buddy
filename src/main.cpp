@@ -1,19 +1,29 @@
 #include <Arduino.h>
-
-/* Test sketch for Adafruit PM2.5 sensor with UART or I2C */
 #include <Adafruit_PM25AQI.h>
-
-// If your PM2.5 is UART only, for UNO and others (without hardware serial)
-// we must use software serial...
-// pin #2 is IN from sensor (TX pin on sensor), leave pin #3 disconnected
-// comment these two lines if using hardware serial
 #include <SoftwareSerial.h>
-SoftwareSerial pmSerial(2, 3);
+#include "TFT_eSPI.h"
+#include "Free_Fonts.h"
 
+#define SCREEN_HEIGHT
+#define SCREEN_WIDTH
+
+TFT_eSPI tft;
+SoftwareSerial pmSerial(2, 3); // pin #2 is IN from sensor (TX pin on sensor), leave pin #3 disconnected
 Adafruit_PM25AQI aqi = Adafruit_PM25AQI();
+
+void drawGraphics()
+{
+  tft.begin();
+  tft.setRotation(3);
+
+  tft.fillScreen(TFT_RED);        // Red background
+  tft.drawPixel(4, 7, TFT_BLACK); // drawing a black pixel at (4,7)
+}
 
 void setup()
 {
+  drawGraphics();
+
   // -------- Adafruit PMSA003I Air Quality Sensor Setup ----------
   // Wait for serial monitor to open
   Serial.begin(115200);

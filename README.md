@@ -15,7 +15,7 @@ Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impa
 | 300+ | Hazordous | 200 + |
 
 # Circuit Diagram
-![](./circuit_diagram.svg)
+![circuit diagram](./circuit_diagram.svg)
 
 # References
 - [Wio Terminal Getting Started](https://wiki.seeedstudio.com/Wio-Terminal-Getting-Started/) - documentaiton for the Seeed studio wio terminal
