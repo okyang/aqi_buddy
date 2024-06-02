@@ -7,6 +7,7 @@ git submodule update --init --recursive
 Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impacts to human health. According to [World Air Quality Index Project](https://aqicn.org/calculator/), the US EPA standard for AQI is:
 
 | AQI | Air Pollution Level | PM 2.5 |
+| --- | --- | --- |
 | 0 - 50 | Good | 0 - 12 |
 | 51 - 100 | Moderate | 13 - 35 |
 | 101 - 150 | Unhealthy for Sensitive Groups | 36 - 56 |
