@@ -4,25 +4,74 @@
 #include "TFT_eSPI.h"
 #include "Free_Fonts.h"
 
-#define SCREEN_HEIGHT
-#define SCREEN_WIDTH
+#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 320
+#define TITLE_Y_POSITION 240 * 1 / 7   // title text position of pollution level
+#define READING_Y_POSITION 240 * 4 / 5 // title text position of pm2.5 sensor
 
 TFT_eSPI tft;
 SoftwareSerial pmSerial(2, 3); // pin #2 is IN from sensor (TX pin on sensor), leave pin #3 disconnected
 Adafruit_PM25AQI aqi = Adafruit_PM25AQI();
 
-void drawGraphics()
+/// @brief Setups screen orientation and tft font
+void setupGraphics()
 {
   tft.begin();
   tft.setRotation(3);
+  tft.setFreeFont(FSSB12); //  Freefont, Sans Serif, Bold, 12pt
+  tft.fillScreen(TFT_BLACK);
+}
 
-  tft.fillScreen(TFT_RED);        // Red background
-  tft.drawPixel(4, 7, TFT_BLACK); // drawing a black pixel at (4,7)
+/// @brief Updates the graphics to reflect pm 2.5 readings
+/// @param pm2p5 Represents the pm 2.5 readings from the sensor.
+void updateGraphics(int pm2p5)
+{
+  // clear text in UI
+  tft.fillRect(0, TITLE_Y_POSITION, SCREEN_WIDTH, TITLE_Y_POSITION + 3, TFT_BLACK);
+  tft.fillRect(0, READING_Y_POSITION, SCREEN_WIDTH, READING_Y_POSITION + 3, TFT_BLACK);
+
+  // air quality color indicator
+  String pollutionLevelText;
+  int color = TFT_WHITE;
+  if (pm2p5 < 0)
+  {
+    pollutionLevelText = "No AQI Data";
+  }
+  else if (0 <= pm2p5 && pm2p5 <= 50)
+  {
+    pollutionLevelText = "Good";
+    color = TFT_GREEN;
+  }
+  else if (50 < pm2p5 && pm2p5 <= 100)
+  {
+    pollutionLevelText = "Moderate";
+    color = TFT_GREENYELLOW;
+  }
+  else if (100 < pm2p5 && pm2p5 <= 150)
+  {
+    pollutionLevelText = "Unhealthy for Sensitive Groups";
+    color = TFT_YELLOW;
+  }
+  else
+  {
+    pollutionLevelText = "Unhealthy";
+    color = TFT_RED;
+  }
+
+  int pollutionLevelTextWidth = tft.textWidth(pollutionLevelText);
+  String aqiLevelText = String(pm2p5);
+  int aqiLevelTextWidth = tft.textWidth(aqiLevelText);
+
+  // draw in UI elements
+  tft.drawString(pollutionLevelText, (SCREEN_WIDTH - pollutionLevelTextWidth) / 2, TITLE_Y_POSITION);
+  tft.fillCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50, color);
+  tft.drawString(String(pm2p5), (SCREEN_WIDTH - aqiLevelTextWidth) / 2, READING_Y_POSITION);
 }
 
 void setup()
 {
-  drawGraphics();
+  setupGraphics();
+  updateGraphics(-1);
 
   // -------- Adafruit PMSA003I Air Quality Sensor Setup ----------
   // Wait for serial monitor to open
@@ -61,8 +110,10 @@ void loop()
   Serial.println(F("---------------------------------------"));
   Serial.println(F("Concentration Units (standard)"));
   Serial.println(F("---------------------------------------"));
-  Serial.print(F("\t\tPM 2.5: "));
+  Serial.print(F("PM 2.5: "));
   Serial.print(data.pm25_standard);
 
-  delay(1000);
+  // Update pm 2.5 graphics
+  updateGraphics(data.pm25_standard);
+  delay(100);
 }
