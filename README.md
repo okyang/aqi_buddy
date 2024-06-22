@@ -1,19 +1,23 @@
-# Setup
-```
-git submodule update --init --recursive
-```
+# AQI Buddy
+
+AQI Buddy is a minimal air quality display using a Wio Terminal and Plantower PMS503. It is designed to be portable so you can measure the air quality anywhere you go.
 
 # Background
 Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impacts to human health. According to [World Air Quality Index Project](https://aqicn.org/calculator/), the US EPA standard for AQI is:
 
-| AQI | Air Pollution Level | PM 2.5 |
-| --- | --- | --- |
-| 0 - 50 | Good | 0 - 12 |
-| 51 - 100 | Moderate | 13 - 35 |
-| 101 - 150 | Unhealthy for Sensitive Groups | 36 - 56 |
-| 151 - 200 | Unhealthy | 57 - 150 |
-| 201 - 300 | Very Unhealthy | 151 - 199 |
-| 300+ | Hazordous | 200 + |
+| AQI       | Air Pollution Level            | PM 2.5    |
+| --------- | ------------------------------ | --------- |
+| 0 - 50    | Good                           | 0 - 12    |
+| 51 - 100  | Moderate                       | 13 - 35   |
+| 101 - 150 | Unhealthy for Sensitive Groups | 36 - 56   |
+| 151 - 200 | Unhealthy                      | 57 - 150  |
+| 201 - 300 | Very Unhealthy                 | 151 - 199 |
+| 300+      | Hazordous                      | 200 +     |
+
+# Setup
+```
+git submodule update --init --recursive
+```
 
 # Circuit Diagram
 ![circuit diagram](./circuit_diagram.svg)
