@@ -49,7 +49,7 @@ void updateGraphics(int pm2p5)
   }
   else if (100 < pm2p5 && pm2p5 <= 150)
   {
-    pollutionLevelText = "Unhealthy for Sensitive Groups";
+    pollutionLevelText = "Unhealthy for Sensitive";
     color = TFT_YELLOW;
   }
   else
