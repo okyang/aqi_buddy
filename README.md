@@ -10,7 +10,7 @@
   - [2 - Building the Circuit!](#2---building-the-circuit)
   - [3 - Upload Code to Wio Terminal](#3---upload-code-to-wio-terminal)
   - [4 - Final Assembly](#4---final-assembly)
-- [Things I Learned and Improvements](#things-i-learned-and-improvements)
+- [Things I Learned and Improvement Considerations](#things-i-learned-and-improvement-considerations)
 - [References](#references)
 
 <!-- TOC end -->
@@ -18,7 +18,9 @@
 <!-- TOC --><a name="aqi-buddy"></a>
 
 # AQI Buddy
-AQI Buddy is a minimal air quality display using a Wio Terminal and Plantower PMS503. It is designed to be portable so you can measure the air quality anywhere you go.
+AQI Buddy is a minimal air quality display using a Wio Terminal and Plantower PMS503. It is designed to be portable so you can measure the air quality anywhere you go. For example, the air quality when cooking, driving on the highway, outdoors, indoors, etc.
+
+![thumbnail photo](./imgs/thumbnail.png)
 
 # Background
 Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impacts to human health. According to [World Air Quality Index Project](https://aqicn.org/calculator/), the US EPA standard for AQI is:
@@ -50,6 +52,8 @@ Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impa
 - [ ] USB-C Cable
 - [ ] (Optional for Mobility) USB Power Bank
 
+<img src="./imgs/materials.png" alt="Adding threaded inserts to case" width="500"/>
+
 # Tools Needed
 - [ ] 3D Printer
 - [ ] Hex Key
@@ -60,20 +64,26 @@ Follow all these steps below to setup your on AQI Buddy 😁.
 
 ## 1 - 3D Print the Case
 1. Print the following components
- 2. [aqi_buddy_body.stl](./aqi_buddy_body.stl) - this takes the longest
- 3. [aqi_buddy_lid.stl](./aqi_buddy_lid.stl)
- 4. [sqi_buddy_tab.stl](./aqi_buddy_tab.stl)
+ 2. [aqi_buddy_body.stl](./stl/aqi_buddy_body.stl) - this takes the longest
+ 3. [aqi_buddy_lid.stl](./stl/aqi_buddy_lid.stl)
+ 4. [aqi_buddy_wio.stl](./stl/aqi_buddy_wio.stl)
 2. Add the 4 threaded inserts to the holes in **aqi_buddy_body.stl** with a soldering iron
+
+<img src="./imgs/case_assembly_1.png" alt="Adding threaded inserts to case" width="300"/>
 
 I'm personally not great at CAD, so I am sharing this Onshape link if you want to improve the design yourself 😅: [okyang_aqi_buddy][onshape link]
 
 
 ## 2 - Building the Circuit!
 Solder the male header pins to the aqi sensor breakout board using the circuit diagram below:
-![circuit diagram](./circuit_diagram.svg)
+![circuit diagram](./imgs/circuit_diagram.svg)
 
 1. Plug in the male headers to the left side of wio terminal socket
 2. Solder your wires to the AQI sensor breakout board
+
+<img src="./imgs/circuit_assembly_1.png" alt="adding header to wio terminal" width="300"/>
+
+<img src="./imgs/circuit_assembly_2.png" alt="soldered wires to aqi sensor breakout board" width="300"/>
 
 ## 3 - Upload Code to Wio Terminal
 1. Clone this repo
@@ -88,15 +98,25 @@ Solder the male header pins to the aqi sensor breakout board using the circuit d
 4. Upload the code
 
 ## 4 - Final Assembly
-1. Place Wio Terminal in the Top side of the **aqi_buddy_body** and feed the connection to the AQI sensor breakout board through the rectangular opening
-2. Slide in the **aqi_buddy_tab** and align with the square tab on the **aqi_buddy_body**
-3. Secure the **aqi_buddy_tab** by threading through a M3 screw to the closer hole and secure with a M3 nut
+1. Place Wio Terminal in the Top side of the **aqi_buddy_wio** and feed the connection to the AQI sensor breakout board through the rectangular opening
+2. Add in the **aqi_buddy_body** and align with the rectangular tab on the **aqi_buddy_wio**
+3. Secure the **aqi_buddy_wio** by threading through a M3 screw to the closer hole and secure with a M3 nut
 4. Slide in the AQI sensor to the **aqi_buddy_body** with the fan facing towards the opening (very important!)
 5. Connect the cable from the AQI sensor breakout board to the AQI sensor
 6. Finally, add the **aqi_sensor_lid** and screw in the four M3 screws
 
-# Things I Learned and Improvements
-I am still a novice at CAD design, but I feel like there was so many little things I learned like how to use [variables](https://cad.onshape.com/help/Content/variable.htm) for my sketches, getting more familiar with the various tools in [Onshape](https://www.onshape.com/en/), and learning how to assemble parts together.This is probably very trivial to others, but not for me 😅.
+<img src="./imgs/final_assembly_1.png" alt="" width="300"/>
+
+<img src="./imgs/final_assembly_2.png" alt="" width="300"/>
+
+<img src="./imgs/final_assembly_3.png" alt="" width="300"/>
+
+<img src="./imgs/final_assembly_4.png" alt="" width="300"/>
+
+<img src="./imgs/final_assembly_5.png" alt="" width="300"/>
+
+# Things I Learned and Improvement Considerations
+I am still a novice at CAD design, but I feel like there was so many little things I learned like how to use [variables](https://cad.onshape.com/help/Content/variable.htm) for my sketches, getting more familiar with the various tools in [Onshape](https://www.onshape.com/en/), and learning how to assemble parts together. This is probably very trivial to others, but not for me 😅.
 
 I already knew some of this before, but setting up a Github Actions Workflow was very cool to see. I added a basic check that basically just compiles to code after each commit. This is definitely a very handy feature and very simple check make sure I didn't break the code for others.
 
