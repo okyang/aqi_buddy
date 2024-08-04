@@ -12,24 +12,22 @@
 TFT_eSPI tft;
 SoftwareSerial pmSerial(2, 3); // pin #2 is IN from sensor (TX pin on sensor), leave pin #3 disconnected
 Adafruit_PM25AQI aqi = Adafruit_PM25AQI();
+String previousPollutionLevelText = "";
 
 /// @brief Setups screen orientation and tft font
 void setupGraphics()
 {
   tft.begin();
   tft.setRotation(3);
-  tft.setFreeFont(FSSB12); //  Freefont, Sans Serif, Bold, 12pt
+  tft.setFreeFont(FSSB9); //  Freefont, Sans Serif, Bold, 12pt
   tft.fillScreen(TFT_BLACK);
 }
 
-/// @brief Updates the graphics to reflect pm 2.5 readings
-/// @param pm2p5 Represents the pm 2.5 readings from the sensor.
+/// @brief Updates the graphics to reflect pm 2.5 readings. AQI level
+/// is derived from https://aqicn.org/calculator/.
+/// @param pm2p5 Represents the pm 2.5 readings from the sensor. units are ug/m^3
 void updateGraphics(int pm2p5)
 {
-  // clear text in UI
-  tft.fillRect(0, TITLE_Y_POSITION, SCREEN_WIDTH, TITLE_Y_POSITION + 3, TFT_BLACK);
-  tft.fillRect(0, READING_Y_POSITION, SCREEN_WIDTH, READING_Y_POSITION + 3, TFT_BLACK);
-
   // air quality color indicator
   String pollutionLevelText;
   int color = TFT_WHITE;
@@ -37,35 +35,45 @@ void updateGraphics(int pm2p5)
   {
     pollutionLevelText = "No AQI Data";
   }
-  else if (0 <= pm2p5 && pm2p5 <= 50)
+  else if (0 <= pm2p5 && pm2p5 <= 12)
   {
-    pollutionLevelText = "Good";
+    pollutionLevelText = "AQI is Good";
     color = TFT_GREEN;
   }
-  else if (50 < pm2p5 && pm2p5 <= 100)
+  else if (12 < pm2p5 && pm2p5 <= 35)
   {
-    pollutionLevelText = "Moderate";
+    pollutionLevelText = "AQI is Moderate";
     color = TFT_GREENYELLOW;
   }
-  else if (100 < pm2p5 && pm2p5 <= 150)
+  else if (35 < pm2p5 && pm2p5 <= 56)
   {
-    pollutionLevelText = "Unhealthy for Sensitive";
+    pollutionLevelText = "AQI is Unhealthy for Sensitive";
     color = TFT_YELLOW;
   }
   else
   {
-    pollutionLevelText = "Unhealthy";
+    pollutionLevelText = "AQI is Unhealthy";
     color = TFT_RED;
   }
 
-  int pollutionLevelTextWidth = tft.textWidth(pollutionLevelText);
-  String aqiLevelText = String(pm2p5);
-  int aqiLevelTextWidth = tft.textWidth(aqiLevelText);
+  // clear text in UI
+  if (previousPollutionLevelText != pollutionLevelText)
+  {
+    tft.fillRect(0, TITLE_Y_POSITION, SCREEN_WIDTH, TITLE_Y_POSITION + 3, TFT_BLACK);
+  }
+  tft.fillRect(0, READING_Y_POSITION, SCREEN_WIDTH, READING_Y_POSITION + 3, TFT_BLACK);
+  previousPollutionLevelText = pollutionLevelText;
 
   // draw in UI elements
+  int pollutionLevelTextWidth = tft.textWidth(pollutionLevelText);
   tft.drawString(pollutionLevelText, (SCREEN_WIDTH - pollutionLevelTextWidth) / 2, TITLE_Y_POSITION);
   tft.fillCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 50, color);
-  tft.drawString(String(pm2p5), (SCREEN_WIDTH - aqiLevelTextWidth) / 2, READING_Y_POSITION);
+
+  // draw aqi level
+  String aqiLevelText = "PM2.5 is " + String(pm2p5) + " ug/m^3";
+  int aqiLevelTextWidth = tft.textWidth(aqiLevelText);
+  tft.drawString(aqiLevelText, (SCREEN_WIDTH - aqiLevelTextWidth) / 2, READING_Y_POSITION);
+  // tft.drawString("", (SCREEN_WIDTH - aqiLevelTextWidth) / 2, READING_Y_POSITION);
 }
 
 void setup()
