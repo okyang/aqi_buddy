@@ -109,7 +109,6 @@ void loop()
 
   if (!aqi.read(&data))
   {
-    Serial.println("Could not read from AQI");
     delay(500); // try again in a bit!
     return;
   }
@@ -120,6 +119,7 @@ void loop()
   Serial.println(F("---------------------------------------"));
   Serial.print(F("PM 2.5: "));
   Serial.print(data.pm25_standard);
+  Serial.println();
 
   // Update pm 2.5 graphics
   updateGraphics(data.pm25_standard);
