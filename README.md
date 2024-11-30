@@ -20,6 +20,8 @@
 # AQI Buddy
 AQI Buddy is a minimal air quality display using a Wio Terminal and Plantower PMS503. It is designed to be portable so you can measure the air quality anywhere you go. For example, the air quality when cooking, driving on the highway, outdoors, indoors, etc.
 
+[Youtube Video](https://www.youtube.com/watch?v=UiudOHBMkqQ) | [Instructables](https://www.instructables.com/AQI-Buddy/)
+
 ![thumbnail photo](./imgs/good_thumbnail.jpg)
 
 # Background
