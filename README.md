@@ -44,6 +44,7 @@ Air Quality Index (AQI) meausre PM2.5 to help determine the air quality and impa
 
 # Materials Needed
 - [ ] [Wio Terminal](https://www.seeedstudio.com/Wio-Terminal-p-4509.html)
+- [ ] [PM2.5 Air Quality Sensor and Breadboard Adapter Kit](https://www.adafruit.com/product/3686)
 - [ ] PLA Filament for 3D Printer
 - [ ] [M3 8MM Hex Screws](https://www.amazon.com/dp/B07CMQ1SQH)
 - [ ] [M3x4x5mm Threaded Inserts](https://www.amazon.com/dp/B0CNVXWQYZ)
